@@ -2,20 +2,16 @@ pipeline {
     agent any
 
     stages {
-        stage('Build') {
+
+        stage('FrontEnd Build') {
+        
             steps {
-                echo 'Building..'
+                nodejs('NodeJS 12.14.0') {
+                    sh label: '', script: '''
+                    lerna exec -- npm i && lerna link
+                    npm run build
+                    '''
+                }
             }
-        }
-        stage('Test') {
-            steps {
-                echo 'Testing..'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying....'
-            }
-        }
-    }
+
 }
